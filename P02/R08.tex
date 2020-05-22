@@ -1,0 +1,48 @@
+
+\chapter{B4: Experience with a Globally-Deployed Software Deﬁned WAN}
+\fullcite{jain2013b4} \cite{jain2013b4}.
+
+
+\phantomsection
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+WANs permitem troca de baixa latência e com alta taxa de dados entre pontos conectados, nas quais links WAN tem alto custo e clientes normalmente não aceitam falhas de transimssão. Para prover transmissão confiável, WANs geralmente são fornecidas em um formato superdimensionado --- uso médio de 30 a 40\% de sua capacidade --- e, em face de falhas, aplicações são tratadas de forma equitativa, despeito de demandas diferenciadas.
+
+Através da engenharia de tráfego aplicada a \textit{switches} convencionais, pode-se tomar decisões em situações de competição por recursos restritos, rotear de acordo com recursos disponíveis e prioridade de aplicação, alocar dinamicamente taxa de dados em face de falhas em links e \textit{switches}.
+
+Este trabalho adota uma abordagem de SDNs em WANs na qual aceita-se falhas como eventos inevitáveis e comuns, que devem ser expostas para as aplicações. A rede resultante permite demanda por taxa de transmissão elástica, com tolerância a falhas periódicas, e uso eficiente dos recursos de rede, próximos à capacidade total da rede.
+
+
+\phantomsection
+\section*{Design}
+\addcontentsline{toc}{section}{Design}
+
+O projeto consiste em uma arquitetura em três camadas. A primeira camada é composta por \textit{switches} interconectador pelo \textit{Border Gateway Protocol} --- que permite a interoperabilidade entre parte da rede não definida por software e adoção gradual da tecnologia. A segunda camada contém controle de \textit{switches} OpenFlow, de aplicações de rede e dos servidores da rede. A terceira camada consiste na agregação de aplicações logicamente centralizadas em um ponto de controle global.
+
+Cada \textit{switch} executa, em espaço de usuário, um agente OpenFlow, que implementa uma versão extendida do protocolo OpenFlow com finalidade de utilizar ostensivamente recursos de hardware disponíveis em \textit{switches}. A extensão é utilizada para permitir comunicação entre um \textit{switch} e a aplicação de roteamento.
+
+
+\phantomsection
+\section*{Engenharia de Tráfego e Protocolo}
+\addcontentsline{toc}{section}{Engenharia de Tráfego e Protocolo}
+
+A engenharia de tráfego tem como objetivo alocar taxa de transmissão de dados de forma justa para aplicações através de múltiplos caminhos, baseado em contratos firmados entre a aplicação e o \texorpdfstring{B\textsubscript{4}}{B4}. O protocolo desenvolvido utiliza túneis IP para balancear carga de tráfego concomitantemente ao caminho mais curto --- caso mecanismo de túnel seja desabilitado, o serviço continua operações através do caminho mais curto.
+
+A rede provê tais funcionalidades de forma distribuída, de modo que nós exercem algum nível de coordenação e servidores são escolhidos entre seus pares redundantes por votação.
+
+
+\phantomsection
+\section*{Avaliação}
+\addcontentsline{toc}{section}{Avaliação}
+
+A avaliação do sistema se deu através de análise de seu comportamento em produção. A falha de \textit{switches} resulta em um tempo de convergência de até 3,3 segundos. A bordagem resulta em uso dos links da rede próximo de sua capacidade máxima. O trabalho ainda relata um conjunto de falhas em cascata e salienta a importância dos mecanismos de instrumentação, problemas de manutenção realizada manualmente e a necessidade de testes de estresse.
+
+
+\phantomsection
+\section*{Conclusões}
+\addcontentsline{toc}{section}{Conclusões}
+
+\texorpdfstring{B\textsubscript{4}}{B4} permite alocação dinâmica de taxa de dados entre serviços que compentem por este recurso, bem como a a troca dinâmica dos padrões de comunicação, como estratégia de contorno a falhas de comunicação. A implantação em \textit{switches} convencionais tem como resultado links que operam, por longos períodos, próximos da capacidade máxima, e a separação entre hardware e software do plano de dados e de controle, respectivamente.
+
+Os autores salientam o gargálo de comunicação entre \textit{switches} e controladores como desafio de trabalhos futuros. Salientam ainda, como contribuições, a abordagem híbrida e a possibilidade de adoção gradual de infra-estrutura SDN, bem como o ganho de controle com medição de demanda na periferia da rede controlada.

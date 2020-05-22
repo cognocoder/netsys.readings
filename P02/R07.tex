@@ -1,0 +1,47 @@
+
+\chapter{Software Defined Traffic Measurement with OpenSketch}
+\fullcite{yu2013sketch} \cite{yu2013sketch}.
+
+
+\phantomsection
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+O paradigma de Redes Definidas por Software tem como tarefas principais a gerência do plano de controle e a medição do tráfego. Mecanismos de medição de tráfego devem prover funcionalidades para uma variedade de aplicações de modo eficiente, sem impactar a performance e com baixo custo.
+
+O objetivo do trabalho é propor uma arquitetura de medição de tráfego definida por software que seja flexível e permita ao operador de rede determinar as funcionalidades de medição de acordo com contexto e necessidades. Análogo a outros trabalhos em Redes Definidas por Software, separa plano de medição e plano de controle, o que torna possível implantar esta arquitetura em dispositivos comerciais.
+
+\textit{Sketchs} são estruturas de dados utilizadas em algoritmos de fluxo de dados para armazenar sumários de estados de pacotes, com baixo uso de memória e troca entre uso de memória e acurácia. OpenSketch utiliza \textit{sketchs} para medição de tráfego.
+
+
+\phantomsection
+\section*{Arquitetura do Plano de Dados}
+\addcontentsline{toc}{section}{Arquitetura do Plano de Dados}
+
+A projeto do OpenSketch tem como objetivo suportar diversas atividades de medição com uso eficiente de memória e operações em alta velocidade, independente do tamanho do pacote. O plano de medição consiste na escolha de pacotes para medição e no armazenamento ou exportação dos dados de medição coletados --- através da combinação de \textit{hashs}, classificação e tabelas indexadas.
+
+O OpenSketch utiliza poucas entradas de memória ternária de acesso por conteúdo (TCAM) para aplicação de regras sobre \textit{hashs} e armazena os contadores em memória estática de acesso aleatório (SRAM). Essa decisão se faz pertinente pelo alto custo financeiro e energético de TCAM, em contrapartida de SRAM.
+
+As estatísticas são enviadas ao controlador e os contadores são descartados, em intervalos de tempo regulares. O controlador é responsável por agregar as informações e registrá-las em disco, caso desejável.
+
+\phantomsection
+\section*{Arquitetura do Controlador}
+\addcontentsline{toc}{section}{Arquitetura do Controlador}
+
+O controlador OpenSketch disponibiliza uma biblioteca de \textit{sketchs} com dois componentes principais: configuração automática de balanço entre uso de memória e acurácia, alocação de recursos entre funcionalidades de medição de tráfego. A implementação de funcionalidades de medição que não são diretamente suportadas por \textit{sketchs} pode ser realizada através da combinação de dois ou mais \textit{sketchs} ou implementada no controlador.
+
+A configuração de medição de tráfego no plano de dados é complexa, já que é dependente dos recursos disponíveis no \textit{switch}, a acurácia desejada e a distribuição de tráfego. A configuração automática provida pelo OpenSketch seleciona a melhor acurácia --- de acordo com o balanço entre memória e acurácia, \textit{sketchs} disponíveis e relações entre eles ---, bem como instala \textit{sketchs} necessários para melhor performance no plano de dados. A alocação de recursos é feita de acordo com prioridade da funcionalidade de medição estabelecida pelo operador de rede.
+
+
+\phantomsection
+\section*{Avaliação}
+\addcontentsline{toc}{section}{Avaliação}
+
+A proposta foi avaliada em comparação a outras abordagens da literatura em simulações. Sua viabilidade foi verificada em teste de estresse em \textit{switch} comercial. A aplicação da abordagem não afetou a taxa de vazão do plano de dados, mas a performance é limitada pela atualização de contadores --- devido acesso sequencial de leitura e escrita em SRAM.
+
+
+\phantomsection
+\section*{Conclusão}
+\addcontentsline{toc}{section}{Conclusão}
+
+OpenSketch permite a coleta eficiente e simples de dados de medição de tráfego através do uso de primitivas de medição de \textit{switchs} comerciais do plano de dados e de plano de medição definido por software, o que permite suporte a diversas tarefas de medição. Reduz, portanto, a distância entre pesquisa, implementação e implantação, dentro de um espectro prático, uma vez que apresenta conformidade com requisitos e restrições impostas.
