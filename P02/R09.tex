@@ -1,0 +1,41 @@
+
+\chapter{P4: Programming Protocol-Independent Packet Processors}
+\fullcite{bosshart2014p4} \cite{bosshart2014p4}.
+
+
+\phantomsection
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+Redes Definidas por Software possuem plano de controle fisicamente separado do plano de dados de um conjunto de \textit{switchs} em uma mesma rede. O modelo OpenFlow estabeleceu uma interface de aplicação programável única e independente de hardware, mas sua especificação cresceu em complexidade na medida em que novos campos de cabeçalho foram inseridos ao longo dos anos. O artigo propõe uma linguagem de alto nível para a programação independente de protocolo para processamento de pacotes para permitir flexibilidade no plano de controle, de modo que possa determinar como que \textit{switchs} devem processar pacotes independente de hardware e em ambiente de produção.
+
+
+\phantomsection
+\section*{Modelo Abstrato de Encaminhamento}
+\addcontentsline{toc}{section}{Modelo Abstrato de Encaminhamento}
+
+Diferente do modelo OpenFlow, este artigo assume processamento flexível de pacotes, com estágios de correspondência e ação em paralelo e em série, onde ações são compostas por primitivas independente de protocolo definidas pelo \textit{switch}. O programa de processamento de pacotes definido pelo operador de rede é compilado para a plataforma de destino, processo no qual é responsável por utilizar recursos disponíveis em hardware.
+
+O modelo abstrato de encaminhamento possui dois tipos de operações: configuração e povoamento. A operação de configuração consiste em determinar quais protocolos são suportados e como um \textit{switch} processa os pacotes, através dos estágios de correspondência e ações. A operação de povoamento, por sua vez, consiste na inserção ou remoção de entradas nas tabelas de encaminhamento. O artigo assume que tais operações são realizadas em fases distintas, mas defende que implementações devem ser capazes de alterar plano de encaminhamento sem interrupção do serviço.
+
+Uma vez processado, um pacote é direcionado às tabelas de correspondência e ações, divididas em pares de entrada e saída, com suporte a adição de metadados.
+
+
+\phantomsection
+\section*{Programação e Compilação}
+\addcontentsline{toc}{section}{Programação e Compilação}
+
+A linguagem proposta pelo artigo permite a definição de tipos legais em cabeçalho de pacotes, descrião de regras de correspondência e ação para tabelas de encaminhamento dinâmicas, e execução de estágios em paralelo e em série.
+
+O artigo propõe um processo de compilação em duas etapas. Na primeira estapa, programadores estabelecem o fluxo de controle do programa através de uma liguagem imperativa. Em seguida, o compilador traduz tal fluxo de controle em uma estrutura em grafo, de modo a facilitar a análise de dependência entre estágios executados em série e estágios paralelos.
+
+Os principais componentes da linguagem proposta são definições de: cabeçalhos, com sequência e comprimento de campos; processos de análise de cabeçalhos; tabelas de correspondência e ações; ações compostas por primitivas simples; e programas de controle, que estabelecem fluxo de controle de maneira imperativa entre tais tabelas.
+
+O compilador é responsável por analisar a descrião das tabelas de correspondência e ações e alocar os recursos necessários em hardware. Caso a plataforma de destino possua capacidade de processamento programável, ele traduz o processo de análise em uma máquina de estados.
+
+
+\phantomsection
+\section*{Conclusão}
+\addcontentsline{toc}{section}{Conclusão}
+
+Este trabalho, no entanto, não aborda diversos aspectos operacionais de um \textit{switch} --- primitivas de controle de congestionamento, técnicas de enfileiramento, entre outros ---, mas consiste em um passo em direção à flexibilização do plano de controle em Redes Definidas por Software, através de linguagem imperativa de alto nível programação independente de protocolo para processamento de pacotes. Operadores definem como \textit{switchs} processam pacotes através desta linguagem que então é compilada e implementado em harware específico.

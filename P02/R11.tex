@@ -1,0 +1,53 @@
+
+\chapter{Efficient virtual network isolation in multi-tenant data centers}
+\fullcite{moraes2016efficient} \cite{moraes2016efficient}.
+
+
+\phantomsection
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+O objetivo da proposta é prover isolamento virtual de rede em \textit{datacenters} sem encapsulamento de pacotes, de modo que a tradução entre endereço virtual e físico é realizada através de reescrita do endereço de pacotes.
+A abordagem permite que clientes especifiquem a topologia da rede virtualizada através da linguagem de descrição de rede da OpenStack, gerência o uso dos recursos de rede através de um controlador OpenFlow --- em caráter opcional --- que configura \textit{switchs} Open vSwitch em cada servidor.
+
+
+\phantomsection
+\section*{Abordagem}
+\addcontentsline{toc}{section}{Abordagem}
+
+Um \textit{switch} virtual Open vSwitch é instanciado em cada servidor do \textit{datacenter}. Este \textit{switch} é responsável por interceptar pacotes com a finalidade de prover isolamento entre diferentes redes virtualizadas.
+
+Para que a solução seja possível, a proposta configura um endereço físico (MAC) para cada máquina virtual do \textit{datacenter}, bem como registra endereços de IP associados a tais máquinas. Os endereços pertencentes às redes virtuais não são visíveis na rede física.
+O isolamento de redes virtuais é obtido através da reescrita do enderço de origem e destino de pacotes por consulta em uma tabela que mapeia fluxos entre máquinas virtuais e servidores.
+
+Caso o tráfego esteja contido em um único servidor físico, não é necessário modificar pacotes. Consultas para resolução de endereços (ARP) e multicast são contidos nos \textit{switchs} virtualizados e tráfego com a Internet se dá através de gateway de borda nas redes virtuais.
+
+
+\phantomsection
+\section*{Implementação e Avaliação}
+\addcontentsline{toc}{section}{Implementação e Avaliação}
+
+A implementação da abordagem se faz através de driver para \textit{Neutron} OpenStack, base de persistência de fluxos e controlador POX para Redes Definidas por Software.
+
+O ambiente para avaliação da proposta é composto de três servidores virtualizados, \textit{switch} interno e externo, e a rede do \textit{datacenter}, que por sua vez possui conexão com o controlador de rede e a Internet.
+
+O primeiro passo para avaliação consistiu na verificação do isolamento das redes virtualizadas. A latência é impactada negativamente na maior parte dos testes realizados. No entanto, o impacto é negligenciável e a porposta apresenta a maior taxa de transmissão de dados em cenário adverso simulado. O impacto em taxa de transmissão em condições normais é negligenciável.
+
+Um último conjunto de testes com o objetivo de avaliar a escalabilidade da proposta verificou limitações de desempenho em relação ao controlador POX, cuja implementação não visa alta performance.
+
+
+\phantomsection
+\section*{Trabalhos Relacionados}
+\addcontentsline{toc}{section}{Trabalhos Relacionados}
+
+Uma das categorias de soluções propostas previamente demanda por hardware específico, compatível com o modelo OpenFlow, possivelmente não presente na infra-estrutura de \textit{datacenters}.
+Outra classe de propostas utilizam o encapsulamento de pacotes, que incorrem na impossibilidade de roteamento através de endereço do pacote encapsulado e possivelmente gera sua fragmentação.
+Uma última categoria citada utiliza de campos adicionais para prover o isolamento de redes, abordagem que apresenta problemas de escalabilidade, haja visto restrições impostas pelo tamanho de tais campos.
+
+
+\phantomsection
+\section*{Conclusões}
+\addcontentsline{toc}{section}{Conclusões}
+
+O trabalho permite isolamento de redes virtuais em \textit{datacenters} com baixo impacto em seu desempenho através da reescrita de pacotes, sem impacto na rede física e com flexibilidade para hosts.
+A proposta é escalável e não impõe restrições no endereçamento IP de hosts, com custos adicionais negligenciáveis de memória e de configuração de fluxo por par de IPs.

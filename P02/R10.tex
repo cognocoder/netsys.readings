@@ -1,0 +1,37 @@
+
+\chapter{Protocol-oblivious forwarding: SDN through a future-proof forwarding plane}
+\fullcite{song2013protocol} \cite{song2013protocol}.
+
+
+\phantomsection
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+Redes Definidas por Software tem a intenção de manter a inteligência das redes em software. O modelo OpenFlow se mostrou o de maior alcance dentro das Redes Definidas por Software, mas apresentou um comportamento reativo em face da capacidade de suporte a novos protocolos, bem como o plano de encaminhamento não possui capacidade de monitorar ou modificar seu comportamento sem envolver o controlador. Os autores defendem que estas limitações são resquícios do antigo modelo de redes no qual existe forte acoplamento entre plano de controle e encaminhamento.
+
+
+\phantomsection
+\section*{Proposta do Protocolo}
+\addcontentsline{toc}{section}{Proposta do Protocolo}
+
+Dispositivos de rede possuem hardware e software proprietários, cuja atualização é atrelada ao fabricante. A adoção de Redes Definidas por Software mitigam parcialmente o problema na medida em que provê mecanismos de programabilidade limitada aos dispositivos de rede.
+
+Neste sentido, o trabalho compara, no âmbito dos computadores pessoais, um processador com um elemento de encaminhamento, bem como o controlador de rede com um sistema operacional. Assim como processadores implementam conjunto de instruções agnóstico de aplicações, um elemento de encaminhamento deve implementar operações de análise de pacotes agnósticas de plataformas e protocolos. A adoções deste paradigma é benéfica para a indústria e a pesquisa, uma vez que reduz o investimento e o tempo de ciclos de desenvolvimento.
+
+A realização desta abordagem se dá através da construção de chaves de processamento --- que definem um número de bits de offset e o comprimento de uma campo de cabeçalho ---, instruções sobre tabelas de encaminhamento, gestão de fluxos e estatísticas, operações aritméticas simples e instrução utilitárias para protocolos legados --- como o cálculo de \textit{checksums}. Funções enviadas ao plano de dados são referenciadas por diferentes entradas de tais tabelas, cada qual com uma parametrização. Por fim, o controlador sugere o tipo de tabela a ser utilizada, mas o elemento de encaminhamento pode implementar a funcionalidade requerida com as tabelas disponíveis no dispositivo em questão.
+
+
+\phantomsection
+\section*{Protótipo, Avaliação e Casos de Uso}
+\addcontentsline{toc}{section}{Protótipo, Avaliação e Casos de Uso}
+
+O trabalho conta com a implementação de um controlador e de planos de dados em hardware e software. A abordagem apresenta perda de vazão de até 30\% e mantém performance de processamento de linha para pacotes de 80 bytes.
+
+A abordagem permite a inserção e remoção de campos em pacotes, que possibilitam a gerência de redes por parte do controlador, bem como permite simplificar a pilha de protocolos, uma vez que o plano de encaminhamento é agnóstico de protocolos.
+
+
+\phantomsection
+\section*{Conclusões e Trabalhos Futuros}
+\addcontentsline{toc}{section}{Conclusões e Trabalhos Futuros}
+
+Com o objetivo de prover suporte para diferentes elementos de encaminhamento, autores defendem que o plano de controle deve ser capaz de especificar como o plano de encaminhamento deve processar os pacotes, de maneira simples, eficaz e gradual. Defendem ainda que este trabalho é um passo incipiente e se faz necessário esforço em comunidade para padronização, assim como ocorreu na plataforma de computadores pessoais.
