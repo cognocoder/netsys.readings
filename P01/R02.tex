@@ -1,0 +1,67 @@
+
+\chapter{End-to-end arguments in system design}
+
+\fullcite{saltzer1984end} \cite{saltzer1984end}.
+
+
+\phantomsection
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+\emph{End-to-end argument principle}: diretiva de projeto, para sistemas computacionais distribuídos, no qual se afirma que a inteligência de um sistema usualmente será implementada em suas camadas de alto nível, salvo por motivos de desempenho.
+
+O artigo considera este princípio no âmbito de redes de comunicação:
+\setlength{\parskip}{8pt}
+
+\hangindent3em
+\hangafter=0
+A implementação correta e completa de funções em redes de comunicação somente poderão ser implementadas com o conhecimento e ajuda da aplicação nas pontas do sistema de comunicação. A implementação de tais funções no subsistema de comunicação não é possível, embora uma versão imcompleta possa apresentar melhoria de performance.
+
+
+\setlength\parskip{15pt}
+\phantomsection
+\section*{Transferência de Arquivos}
+\addcontentsline{toc}{section}{Tranferência de Arquivos}
+
+Em uma aplicação na qual se faz a transferência de arquivos entre máquinas distintas, a implementação de mecanismos de confiabilidade no subsistema de comunicação não desoneram a aplicação de implementar funções para garantir a corretude da operação de transferência.
+
+
+\phantomsection
+\section*{Aspectos de Performance}
+\addcontentsline{toc}{section}{Aspectos de Performance}
+
+O esforço despendido na confiabilidade do subsistema de comunicação é uma troca baseada no ganho de performance: um sistema de baixa confiabilidade pode sofrer com o número de tentativas necessárias para se completar uma tarefa; um sistema de alta confiabilidade faz uso intenso de banda e outros recursos computacionais. Neste último caso, se for um requisito da aplicação, a confiabilidade precisará de implementação na aplicação, despeito da confiabilidade do subsistema de comunicação.
+
+Implementar uma função nas camadas baixas pode onerar o subsistema de comunicação por dois motivos: as aplicações compartilham esse subsistema e suas funções, independentemente de suas necessidades; o subsistema pode não ter informações suficientes para implementar a função em questão.
+
+É necessário conhecer características de um sistema e suas aplicações para determinar se a implementação de uma função nas camadas baixas resultará em ganho de performance.
+
+
+\phantomsection
+\section*{Outros Exemplos}
+\addcontentsline{toc}{section}{Outros Exemplos}
+
+O trabalho também trata de outros exemplos da aplicação do princípio do argumento ponto a ponto: garantia de entrega, transmissão segura\footnote{Por vezes apresenta requistos que violam o princípio ponto a ponto, como a prevenção de transmissão acidental de dados sigilosos.}, descarte de mensagens duplicadas, entrega ordenada e gerência de transação.
+
+
+\phantomsection
+\section*{Identificação de Pontas}
+\addcontentsline{toc}{section}{Identificação de Pontas}
+
+Em um sistema de comunicação por voz em tempo real, validação de mensagens promovem atrasos na entrega, não benéficos neste contexto: o ouvinte pode pedir ao interlocutor que repita uma frase, caso receba pacotes danificados, por exemplo. Se o sistema de comunicação por voz fizer uso de arquivos e gravações, passam a ser requistos da aplicação validar os pacotes recebidos.
+
+
+\phantomsection
+\section*{Histórico e Aplicação em Outras Áreas de Sistemas}
+\addcontentsline{toc}{section}{Histórico e aplicação em outras áreas de sistemas}
+
+Outras áreas de sistemas para o qual se aplica o princípio \textit{end-to-end argument}: em protocolos de criptografia, de atualização de dados em duas fases, de redes; em sistemas operacionais, bancários, de resevas de acentos e poltronas, de arquivos; no projeto de arquitetura de computadores.
+
+
+\phantomsection
+\section*{Conclusões}
+\addcontentsline{toc}{section}{Conclusões}
+
+O princípio apresentado no artigo atua como uma navalha de Occam: uma diretiva para o posicionamento de funções nas camadas de protocolos de comunicação. Sua violação se faz justificada nos cenários em que proporciona melhora de performance.
+
+O subsistema de comunicação frequentemente é projetado sem informações sobre as aplicações que o utilizarão. Implementar funções que facilitem o seu uso é, por vezes, impossível, visto que os dados necessários podem estar indisponíveis nesta camada.

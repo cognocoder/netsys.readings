@@ -1,0 +1,94 @@
+
+\chapter{The design philosophy of the DARPA Internet protocols}
+\fullcite{clark1988design} \cite{clark1988design}.
+
+
+\phantomsection
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+O trabalho relata os objetivos originais da arquitetura da Internet e suas relações com as funcionalidades providas por seus protocolos.
+
+
+\phantomsection
+\section*{Objetivos}
+\addcontentsline{toc}{section}{Objetivos}
+
+\emph{A Internet foi desenvolvida fundamentalmente para ser uma rede de redes}: foi necessário desenvolver uma arquitetura de propósito amplo, capaz de integrar redes heterogêneas. Para tanto, a técnica de multiplexação selecionada foi o roteamento de pacotes através de unidades de processamento, armazenamento e redirecionamento de pacotes --- \emph{gateways}.
+
+Uma vez anunciado seu objetivo fundamental, o autor então enumera uma \emph{lista ordenada de objetivos de segundo nível, em ordem de prioridade}, da arquitetura da Internet:
+
+\vspace{-15pt}
+\begin{enumerate}
+  \item Resiliência de comunicação despeito de perda de redes ou \textit{gateways}.
+  \item Suporte a serviços heterogêneos.
+  \item Suporte a redes heterogêneas.
+  \item Suporte à gerência de seus recursos distribuídos.
+  \item Eficiência de custo.
+  \item Facilidade de inserção de hosts.
+  \item Responsabilização ética do uso de seus recursos.
+\end{enumerate}
+
+Tais objetivos foram elaborados em contexto militar, no qual é prioritário a alocação e uso de recursos frente à prestação de contas. A arquitetura da Internet teria como prioridade a prestação de contas se o contexto fosse comercial.
+
+
+\phantomsection
+\section*{Sobrevivência em Face de Falhas}
+\addcontentsline{toc}{section}{Sobrevivência em Face de Falhas}
+
+Em face de algumas falhas, a Internet fica temporariamente indisponível e se reconfigura para reconstituir o serviço. Após esta etapa, as aplicações retomam a comunicação através da aplicação do princípio de argumento ponta a ponta, discutido em \emph{End-to-end arguments in system design} \cite{saltzer1984end}, uma vez que a camada de transporte não detém informações sobre o estado da comunicação --- número de pacotes entregues, recebidos ---, formada por roteadores de pacotes sem estados.
+
+A aplicação do princípio de argumento ponta a ponta, neste contexto, foi denominada pelo autor de compartilhamento de destino: o estado de comunicação é armazenado nas pontas, de modo a permitir o resumo de atividades em caso de falhas na rede.
+
+
+\phantomsection
+\section*{Tipos de Serviço}
+\addcontentsline{toc}{section}{Tipos de Serviço}
+
+Diferente tipos de serviço exigem diferentes tipos de requisitos. O serviço tradicional é a entrega confiável bidirecional de dados. O Protocolo de Controle de Transmissão (TCP) foi desenvolvido inicialmente para suportar qualquer tipo de serviço. Na comunicação por voz em tempo real, o requisito primário é um serviço que reduza o atraso de entrega, no lugar de confiablidade de entrega.
+
+A arquitetura da Internet rapidamente incorporou o objetivo de prover diferentes serviços de comunicação simultâneamente, o que resultou na separação em camadas do TCP e do Protocolo de Internet (IP). O uso de datagramas pelo IP teve como finalidade de prover o bloco base de construção a partir do qual os serviços são criados. O \textit{User Datagram Protocol} (UDP) disponibiliza acesso a nível de aplicação aos datagramas.
+
+
+\phantomsection
+\section*{Variedade de Redes}
+\addcontentsline{toc}{section}{Variedade de Redes}
+
+A arquitetura da Internet, por objetivo de projeto, precisou ser capaz de incorporar e utilizar uma variedade de redes. A implementação da arquitetura em camadas permitiu a modularização de seus componentes e sua adoção em diferentes \textit{hosts}, uma vez que exige esforço de engenharia e de implementação uma única vez por \textit{host}. Após esta etapa, a implementação de interface para sistemas de software com a rede é normalmente simples.
+
+
+\phantomsection
+\section*{Outros Objetivos}
+\addcontentsline{toc}{section}{Outros Objetivos}
+
+Os últimos quatro objetivos foram atendidos de forma menos rigorosa ou completamente negligenciados, da perspectiva de engenharia. A retransmissão de dados em nível de rede não é relevante, se a taxa de perda de pacotes em transmissão for de 1\%, mas se torna pertinente, caso atinja a uma taxa de 10\%.
+
+
+\phantomsection
+\section*{Arquitetura e Implementação}
+\addcontentsline{toc}{section}{Arquitetura e Implementação}
+
+A arquitetura da Internet tolera uma variedade de implementações por decisão de projeto. Uma experiência comum de implementação é constatar sua ineficiência, após sua demonstração lógica de corretude. Essa dificuldade surge do fato de que não é objetivo da arquitetura especificar requisitos de performance, mas permitir variedade; bem como pela falta de ferramentas análise e descrição de performance.
+
+
+\phantomsection
+\section*{Datagramas}
+\addcontentsline{toc}{section}{Datagramas}
+
+A característica fundamental da arquitetura da Internet é o uso de datagramas como entidade que é transportada através das redes. O uso de datagramas elimina a necessidade de se manter o estado de conexão em nós e \textit{gateways}, de modo que a comunicação pode ser reestabelecida em caso de falhas. Sua adoção provê um bloco de construção básico para diversos tipos de serviços, bem como um serviço mínimo de rede, incorporado em diversas implementações.
+
+
+\phantomsection
+\section*{Protocolo de Controle de Transmissão}
+\addcontentsline{toc}{section}{Protocolo de Controle de Transmissão}
+
+O TCP trabalha com fluxo de bytes, cujo objetivo, por razões históricas, era permitir a fragmentação de pacotes, funcionalidade hoje implementada pelo IP.
+
+
+\phantomsection
+\section*{Conclusões}
+\addcontentsline{toc}{section}{Conclusões}
+
+A arquitetura da Internet e seus protocolos são amplamente utilizados no contexto militar, comercial e cívil. Seu sucesso fez com que fosse possível perceber que as prioridades de projeto não atendem algumas da necessidades de seus usuários, de modo que se faz necessário esforço nos últimos objetivos de segundo nível, como a responsabilização ética do uso de recursos e a gerência dos recursos de rede.
+
+O autor discute como que os datagramas atuam neste contexto, no qual \textit{gateways} tratam pacotes de forma isolada e sugere a criação de um outro bloco de construção para a arquitetura da Internet, denominado de \emph{fluxo}. Em tese, o fluxo seria capaz de armazenar estatos intermediários e prover funcionalidades para atender os objetivos de segundo nível.
