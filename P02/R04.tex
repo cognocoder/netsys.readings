@@ -1,0 +1,38 @@
+
+\chapter{BPFabric: Data Plane Programmability for Software Defined Networks}
+\fullcite{jouet2017bpfabric} \cite{jouet2017bpfabric}.
+
+\phantomsection
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+Com o objetivo de superar limitações impostas pelo padrão OpenFlow, que estabelece ações sobre campos de pacotes através do algoritmo \textit{Longest Prefix Match}, o trabalho propõe uma plataforma, protocolo e conjunto de instruções, em uma arquitetura independente de linguagem, para expressar funções do plano de dados em Redes Definidas por Software.
+
+
+\phantomsection
+\section*{Arquitetura}
+\addcontentsline{toc}{section}{Arquitetura}
+
+De forma similar ao OpenFlow, a proposta do artigo visa remover o plano de controle de \textit{switchs}, de modo que o controlador definido por software e tais dispositivos se comunicam através da interface programável de aplicação sul.
+
+O fluxo de trabalho nesta arquitura consiste em definir funções leves através de uma linguagem restrita de alto nível --- atualmente uma variação restrita da linguagem C. Em seguida, tais funções são compiladas para o conjunto de instruções eBPF --- uma interface extendida para a camada de enlace de dados --- e enviadas para hardware ou software, em tempo de execução, através de uma interface programável de aplicação sul. O dispositivo de rede controlado traduz ou executa essas funções --- de acordo com o alvo especificado, hardware ou software ---, bem como aloca as tabelas necessárias.
+
+Pacotes recebidos pelos dispositivos de rede tem metadados sobre porta de entrada e tempo de recebimento adicionados no início da mensagem, uma vez que a maior parte das funcionalidades utilizarão estas informações. O valor de retorno das funções implantadas pelo conjunto de instruções eBPF é a porta de destino de encaminhamento, com valores reservados para \textit{flood}, \textit{drop} e envio ao controlador.
+
+A comunicação entre dispostitivos de rede e o controlador utilizam o protocolo TCP e Protocol Buffers. Mensagens enviadas contém seu tipo, tamanho e conteúdo, com suporte a operações para \textit{handshake}, instalar funções em \textit{switchs}, receber e enviar pacotes, leitura e escrita nas tabelas de encaminhamento e enviar notificações assíncronas.
+
+
+\phantomsection
+\section*{Implementações e Demonstrações}
+\addcontentsline{toc}{section}{Implementações e Demonstrações}
+
+O trabalho conta com duas implementações. A primeira realização se dá em espaço de usuário em ambiente Linux e utiliza a interface do \textit{kernel} de \textit{sockets}, com suporte ao ambiente de simulação Mininet. A segunda implementação, que visa apresentar alta performance, foi desenvolvida sobre um conjunto de bibliotecas aplicáveis a dispositivos proprietários. O controlador, implementado em Python, utiliza as bibliotecas Protocol Buffers e Twisted, conta com menos de 200 linhas de código.
+
+Para demonstrar a proposta, os autores implementaram \textit{switchs} com aprendizado tradicional e centralizado; telemetria para tamanho e tempo de chegada entre pacotes; e detecção de anomalias.
+
+
+\phantomsection
+\section*{Conclusão}
+\addcontentsline{toc}{section}{Conclusão}
+
+Este trabalho propõe uma arquitetura que permite o plano de controle definir, em tempo de execução, funções para o pipeline de processamento de pacotes do plano de dados, bem como consultar o estado da rede. A abordagem demonstra como a colaboração entre os dispositivos de rede e a infra-estrutura de controle permite --- através da interface programável de aplicação inferior e de um conjunto de instruções independente de plataforma e protocolo --- plano de dados flexíveis, no contexto das Redes Definidas por Software, com funções de roteamento, encaminhamento, \textit{middlebox} e semelhantes.

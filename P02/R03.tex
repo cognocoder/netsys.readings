@@ -1,0 +1,94 @@
+
+\chapter{Redes Definidas por Software}
+\fullcite{guedes2012sdn} \cite{guedes2012sdn}.
+
+Redes Definidas por Software constituem um novo paradigma de pesquisas em redes de computadores, com perspectivas de abstração, ambientes de controle e aplicações de rede livres das restrições impostas pela arquitetura calcificada da Internet. O trabalho discute, em sua parte teórica, diversos componentes de um sistema de rede definido por software, como virtualização de elementos de rede, sistemas operacionais de rede, novas aplicações e desafios de pesquisa. O sistema operatiocal de redes POX, desenvolvido para fins de pesquisa e de ensino, é abordado na parte prática.
+
+
+\phantomsection
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+A tecnologia de redes permeia todos os níveis da sociedade, de modo que os seus elementos técnicos e tecnológicos se tornaram \textit{commodities} de amplo acesso. Como resultado, a arquitetura da Internet está calcificada: é necessário manter retrocompatibilidade de funcionalidades e perfomance, de modo que sua arquitetura não apresenta flexibilidade.
+
+Para contornar esta situação, o paradigma de Redes Definidas por Software mantém o encaminhamento em hardware, mas expõe uma interface de acesso e controle da tabela de consulta, através de aplicações expressas em software.
+
+
+\phantomsection
+\section*{Componentes de Sistemas Baseados em Redes Definidas por Software}
+\addcontentsline{toc}{section}{Componentes de Sistemas Baseados em Redes Definidas por Software}
+
+O princípio elementar de redes definidas por software é a possibilidade de programação de seus elementos por meio de manipulação simples de pacotes, baseados no conceito de fluxos \cite{clark1988design} --- sequência de pacotes que compartilham atributos com determinados valores --- exposta pela interface de programação.
+
+Cada pacote recebido pelas interfaces de um comutador gera uma consulta à tabela de encaminhamento do comutador --- que pode descartar ou definir comportamento padrão para consultas malsucedidas. O pacote então atravessa as interconexões do comutador para a porta de destino e é enfileirado para transmissão. As operações de consulta e chaveamento já se encontram consolidadas na literatura.
+
+Esta técnica permite associar fluxos a recursos e visões através de extensão do princípio de particionamento do tráfego de Internet.
+
+O controlador de rede --- ou sistema operacional de rede --- definido por software através de uma camada de abstração do hardware --- em um novo nível de arquitetura, com o objetivo de definir uma interface que isole os detalhes de cada componente --- permite um visão lógica unificada do estado da rede, de maneira a simplificar a representação de problemas, do mecanismo de tomada de decisões, e as ações a executar. Tal abstração pode ser implementada de forma distribuída.
+
+
+\phantomsection
+\section*{Programação dos Elementos de Rede}
+\addcontentsline{toc}{section}{Programação dos Elementos de Rede}
+
+O OpenFlow é um padrão para Redes Definidas por Software que permite o uso de equipamentos comerciais para pesquisa de novos protocolos de rede em paralelo com suas atividades costumeiras de rede, o que facilita a transferência dos resultados de pesquisa para os outros setores da sociedade.
+
+Neste padrão, há a separação entre plano de dados e controle de chaveamento. O plano de dados é a associação de regras --- ações, na terminologia OpenFlow --- a uma entrada da tabela de encaminhamento do comutador de rede --- implementada em \textit{switchs} OpenFlow através de \textit{Ternary Content Addressable Mamory} (TCAM) ---, no qual um pacote pode:
+
+\vspace{-15pt}
+\begin{itemize}
+  \item Ser encaminhado para uma porta específica do dispositivo;
+  \item Alterar parte de seu cabeçalho;
+  \item Descartá-lo;
+  \item Encaminhá-lo a um controlador de rede para inspeção.
+\end{itemize}
+
+A implementação de referência do modelo OpenFlow é um comutador em software executa no espaço de usuário em sistema Linux. Uma vez que o espaço de usuário não apresenta desempenho comparável com programas executados em espaço do sistema operacional, o Open vSwitch --- um \textit{switch} virtual OpenFlow --- implementa o plano de dados no espaço do núcleo do sistema, enquanto que o controlador atua no espaço de usuário. Essa separação permite fácil manutenção e portabilidade da implementação do plano de dados, bem como prover aceleração de hardware para esta funcionalidade.
+
+Embora o OpenFlow seja relevante no contexto das Redes Definidas por Software, tal paradigma não se limita apenas a este padrão.
+
+
+\phantomsection
+\section*{Particionamento de Recursos}
+\addcontentsline{toc}{section}{Particionamento de Recursos}
+
+Quando os comutadores de uma rede são conectados a um controlador único, o desenvolvimento e instalação de aplicações fica restrito ao seu gestor. Caso a gerência de um controlador seja compartilhada entre agentes, não há garantias de não interferência entre aplicações e todos são obrigados a utilizar uma mesma interface.
+
+Para contornar tal problema, surgiu a demanda de se dividir a rede em fatias, e atribuir cada fatia a um controladores específicos. Pode-se virtualizar a rede física em diversos níveis --- hardware ou sistema operacional, por exemplo. O conceito de virtualização também pode ser aplicado aos elementos de redes visíveis para as aplicações.
+
+
+\phantomsection
+\section*{Controladores de Rede e Desenvolvimento de Sistemas com POX}
+\addcontentsline{toc}{section}{Controladores de Rede e Desenvolvimento de Sistemas com POX}
+
+Controladores de redes se encontram implementados em diversos paradigmas de programação, em sistemas de simulção, sistemas distribuídos, em sistemas \textit{single} e \textit{multi-thread}, com a visão lógica da rede definida por software centralizada e distribuída. O controlador POX foi desenvolvido para fins de pesquisa e de ensino, no padrão OpenFlow, na liguagem de programação Python.
+
+O controlador POX conta com mecanismos de teste e depuração, registro de componentes de rede, orientação a eventos, e modelo de \textit{threads} cooperativas, no qual é possível utilizar o modelo preemptivo. É organizado em módulos e componentes, ambos extensíveis.
+
+
+\phantomsection
+\section*{Aplicações e Desafios de Pesquisa}
+\addcontentsline{toc}{section}{Aplicações e Desafios de Pesquisa}
+
+A visão global de uma rede definida por software pode estar disponível nas formas centralizada e distribuída, uma vez que se trata de um componente lógico. Tal visão, que em si é uma aplicação e desafio de pesquisa:
+
+\vspace{-15pt}
+\begin{itemize}
+  \item Criação de controle de acesso baseados em fluxos;
+  \item Gerência de redes e detecção de anomalias na rede;
+  \item Genrência de energia através do controle de transmissão ou desligamento de dispositivos;
+  \item Expansão de roteadores para alta capacidade;
+  \item Virtualização de elementos de rede;
+  \item Isolamento de tráfego e gerência de rede em contexto multi-usuário.
+\end{itemize}
+
+Ainda pode-se citar a configuração de redes domésticas, que apresentam crescente complexidade e número de dispositivos ativos; o uso de princípios organizacionais abstratos nos controladores de rede, como o uso escalonamento de processos, sincronização e memória virtual; abstração de encaminhamento, com padrão OpenFlow implementado nas pontas da rede, por exemplo; depuração entre camada física e lógica das redes; e definição de artefatos de software de que se adequem aos diferentes cenários de aplicação e pesquisa.
+
+Os autores salientam que os pontos mencionados não apresentam uma lista compreensiva e as possibilidades do paradigma das Redes Definidas por Software ainda não se encontra consolidado.
+
+
+\phantomsection
+\section*{Considerações Finais}
+\addcontentsline{toc}{section}{Considerações Finais}
+
+O trabalho salienta a ênfase necessária no controlador de rede, que tem papel essencial no âmbito das Redes Definidas por Software, bem como a tração da área de pesquisa e seus desafios. Abordou-se, no espectro prático, o controlador POX, com finalidade de pesquisa e ensino.
