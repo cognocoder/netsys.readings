@@ -1,0 +1,37 @@
+
+\chapter{SoftRAN: Software defined radio access network}
+\fullcite{gudipati2013softran} \cite{gudipati2013softran}.
+
+Redes de acesso por rádio constituem importante parte das redes, que permitem acesso amplo e sem fio para dispositivos móveis, cujo principal esforço é a gerência do espectro limitado para prover conectividade entre dispositivos. O trabalho propõe plano de controle definido por software para redes de acesso por rádio.
+
+
+\phantomsection
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+Com o objetivo de prover solução para o espectro limitado, a infra-estrutura de redes sem fio se tornou densa e caótica, de modo que cada usuário tem uma conexão de melhor qualidade e cada estação de rede precisa suportar um número menor de dispositivos. Como resultado, estações adjacentes frequentemente operam em um mesmo canal, de modo que a rede tem fator de reuso de frequência 1. Tais estações tem a necessidade de fazer gestão coordenada de interferência e recursos da rede, neste contexto.
+
+
+\phantomsection
+\section*{Arquitetura}
+\addcontentsline{toc}{section}{Arquitetura}
+
+Redes de acesso por rádio apresentam objetivos diversos, que, em um discurso amplo, são atingidos através da transferência de unidades móveis entre células de uma mesma rede, alocação de blocos de recursos e a potência de transmissão de cada bloco. Estes três fatores constituem o plano de controle compartilhado pelas estações da rede.
+
+A arquitetura proposta para o controlador central tem como principais desafios permitir diferentes algoritmos de controle e garantir que a comunicação entre estações e controlador não impacte negativamente a performance da rede. O controlador central implementa uma grade de recursos com uma dimensão para cada fator acima citado, bem como uma base de informações que contém, principalmente, o mapa de interferência, registro de fluxos e preferências do operador de rede.
+
+Assim como nas Redes Definidas por Software, existe o intuito de simplificar as estações de transmissão, que exercem controle sobre parâmetros dinâmicos da rede, a fim de evitar o atraso inerente da comunicação entre o controlador e a célula --- alocação de recursos para \textit{downlink}. Decisões que demandam coordenação, pelo acoplamento intrínseco de células vizinhas em redes densas, preferencialmente ocorrerem no controlador central --- transferência de dispositivos entre células, potência de transmissão e alocação de recursos para \textit{uplink}; no entanto.
+
+
+\phantomsection
+\section*{Casos de Uso, Análise de Viabilidade e Discussão}
+\addcontentsline{toc}{section}{Casos de Uso, Análise de Viabilidade e Discussão}
+
+São discutidos os casos de uso de balanceamento de carga entre elementos de rádio e de recursos de rede. Em ambos os casos, o controle central apresenta vantagem se comparado ao controle distribuído. A viabilidade da proposta é avaliada em termos da banda necessária para atualizar as células da rede e o controlador. Em seguida, discute-se possibilidades de coordenação de funções da primeira camada de rede, adaptação dinâmica da rede em vista do padrão de tráfego e a adoção gradual da proposta, uma vez que seu projeto considerou os protocolos, padrões e dispositivos existentes.
+
+
+\phantomsection
+\section*{Conclusões e Trabalhos Futuros}
+\addcontentsline{toc}{section}{Conclusões e Trabalhos Futuros}
+
+Os autores defendem que a proposta do artigo é viável, permite inovação e simplifica a gerência de redes de acesso por rádio. Em sua versão apresentada no artigo, o trabalho foi implementado em software de simulação, de modo que a avaliação em software e hardware se faz necessária.

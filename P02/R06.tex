@@ -1,0 +1,42 @@
+
+\chapter{Ethanol: Software Defined Networking for 802.11 Wireless Networks}
+\fullcite{moura2015ethanol} \cite{moura2015ethanol}.
+
+
+\phantomsection
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+Redes sem fio são densas, paredes absorvem sinal, nós apresentam mobilidade e a gerência de recursos e eficiência da rede ocorre através de interfaces proprietárias. O uso de redes definidas por software permitem a evolução de funcionalidades e eficiência da rede, uma vez que atualizações podem ser implantadas em tempo de execução e na mesma plataforma.
+
+A proposta do trabalho é separar o plano de controle e o plano de dados em pontos de acesso, assim como o paradigma de Redes Definidas por Software o fez nos dispositivos de rede cabeada.
+
+\phantomsection
+\section*{Desafios nas Redes sem Fio Definidas por Software}
+\addcontentsline{toc}{section}{Desafios nas Redes sem Fio Definidas por Software}
+
+A aplicação do paradigma de Redes Definidas por Software para redes sem fio não é trivial, uma vez que o link entre um dispositivo de usuário e um ponto de acesso pode ter qualidade variável para cada pacote, este mesmo link se dá em um meio compartilhado por todos os dipositivos, e um dispositivo de usuário apresenta mobilidade e pode ser necessário transferi-lo para outro ponto de acesso.
+
+Oriundas e relacionadas a estas características, os autores salientaram desafios no contexto de Redes Definidas por Software para redes sem fio: qualidade de serviço, segurança e localização de usuário. Além destes desafios, é mencionado a possibilidade de virtualização de elementos da rede sem fio.
+
+
+\phantomsection
+\section*{Arquitetura, Implementação e Experimentos}
+\addcontentsline{toc}{section}{Arquitetura, Implementação e Experimentos}
+
+A arquitetura Ethanol consiste de um controlador capaz de operar \textit{switchs} OpenFlow --- para gerência da estrutura cabeada da rede, caso presentes --- e pontos de acesso Ethanol, de modo que encapsula os protocolos OpenFlow e Ethanol. Ele provê a funcionalidade de qualidade de serviço para a rede cabeada e sem fio.
+
+A interface programável de aplicação foi modelada através do paradigma orientado a objetos e é composta por elementos físicos e virtuais, com suporte a eventos. São entidades modeladas: pontos de acesso físicos e virtuais, links, redes sem fio, conexões de usuário e fluxos OpenFlow.
+
+Um agente Ethanol em etapa de protótipo foi implementado e implantado em ponto de acesso de uso doméstico, de modo que contém apenas um subconjunto das funcionalidade projetadas. O controlador Ethanol foi implementado a partir de modificação do controlador POX para suportar troca de mensagens através de chamadas a procedimentos remotos por XML sobre o HTTPS.
+
+Os experimentos realizados consistem em balanceamento de clientes em pontos de acesso, qualidade de serviço com priorização de fluxos, e redução de tempo de ar despendido com requisições do Protocolo de Resolução de Endereços --- responsáveis por consumir aproximadamente 10\% do tempo de ar, em redes convencionais.
+
+
+\phantomsection
+\section*{Conclusões}
+\addcontentsline{toc}{section}{Conclusões}
+
+O trabalho proposto disponibiliza uma interface programável de aplicação entre um controlador definido por software e pontos de acesso, de modo a permitir a implementação e implantação de funcionalidades para qualidade de serviço, segurança, mobilidade e virtualização de redes sem fio, assim como serviços baseados em uma visão ampla da rede, contexto e localização.
+
+Como trabalhos futuros, os autores salientam a implementação da interface programável de aplicação norte, funcionalidades projetadas e não implementadas, e testes de escalabilidade em redes extensas.
