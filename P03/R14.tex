@@ -1,0 +1,67 @@
+
+
+\chapter{Analysis of the increase and decrease algorithms for congestion avoidance in computer networks}
+\fullcite{chiu1989analysis} \cite{chiu1989analysis}.
+
+
+\phantomsection
+\section*{Introdução}
+\addcontentsline{toc}{section}{Introdução}
+
+O fenômeno de congestionamento de redes se tornou frequente a partir da 
+interconexão por dispositivos heterogeneos, com especificações de desempenho 
+distintas. Caso um dispositivo recebe mais mensagens do que pode processar, 
+pacotes pendentes são armazenados em filas. A partir do momento em que o 
+tamanho dessas filas é ultrapassado, pacotes são descartados, fato que só é 
+perceptível no rementente uma vez que o tempo para o recebimento do pacote de 
+confirmação expirar. O aumento do tempo de resposta é utilizado como 
+diagnóstico para o congestionamento.
+
+O controle e prevenção de congestionamento tratam da gerência do uso de 
+recursos e operam no limiar delineado acima ao ajustar a janela ou taxa de 
+transmissão. A análise dos algoritmos se dá em uma perspectiva além da 
+prevenção de congestionamento. Os controladores são avaliados em termos da 
+eficiência, equidade, distributividade e convergência.
+
+
+\phantomsection
+\section*{Controles Lineares}
+\addcontentsline{toc}{section}{Controles Lineares}
+
+A análise do sistema linear é realizada por mapa de demanda de agentes por 
+recursos da rede, com convergência diagramada vetorialmente. A sua eficiência de 
+convergência é analisada de acordo com sua responsividade e suavidade --- 
+antagônicos entre si --- em relação ao ponto objetivo.
+
+
+\phantomsection
+\section*{Controles Não-Lineares}
+\addcontentsline{toc}{section}{Controles Não-Lineares}
+
+Embora controles não-lineares ofereçam maior flexibilidade na busca por 
+equidade da distribuição de recursos da rede, precisar os fatores do modelo é 
+complexo. Ademais, a sensibilidade do controle não-linear a esses parâmetros o 
+caracteriza com robustez reduzida.
+
+
+\phantomsection
+\section*{Conclusões}
+\addcontentsline{toc}{section}{Conclusões}
+
+A escolha de um algoritmo independente de escala ou parâmetros de software e 
+hardware se faz necessária pela heterogeneidade dos dispositivos de rede, bem 
+como a operação sobre fatores integrais. A facilidade de implementação é
+desejável. O trabalho propõe as seguintes perguntas:
+\begin{enumerate}
+  \item Como o atraso de retorno afeta o controle?
+  \item Qual a utilidade de aumentar o tamanho do campo de retorno?
+  \item É vantajoso estimar o número de clientes?
+  \item Qual o impacto da operação assíncrona?
+\end{enumerate}
+
+O trabalho analisa conjunto de algoritmos de controle e prevenção de 
+congestionamento que visa minimizar a latência e maximizar a janela ou taxa de 
+transmissão através de retorno do estado da rede a usuários, que ajustam 
+demanda por recursos da rede. Estabelece condições pelas quais se pode manter 
+ou melhorar métricas. A melhor política de controle e prevenção de 
+congestionamento é o aumento aditivo e a redução multiplicativa.
