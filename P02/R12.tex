@@ -1,31 +1,64 @@
 
 \chapter{RSS++ load and state-aware receive side scaling}
-\fullcite{barbette2019rss} \cite{barbette2019rss}.
+\fullcite{barbette2019rsspp} \cite{barbette2019rsspp}.
 
 
 \phantomsection
 \section*{Introdução}
 \addcontentsline{toc}{section}{Introdução}
 
+Aplicações de rede frequentemente usam múltiplos núcleos de CPU para lidar com 
+alta demanda e apresentar baixa latência. O estado da arte, conforme consta no 
+trabalho, relata o uso da fragmentação de recursos com agregação por fluxo. Em 
+tal técnica, um pacote resulta em carga de trabalho um em núcleo de CPU, 
+determinado por fluxo, de modo que a distribuição não balanceada de carga pode 
+resultar em enfileiramento de pacotes, aumento da latência, e, em última 
+instância, no descarte de pacotes. O superdimensionamento de recursos 
+computacionais não é adequado para endereçar uma solução neste contexto.
 
+A fragmentação se trata de uma tarefa não trivial, com os seguintes requisitos: 
+distribuição de carga, afinidade de fluxo por fragmento, rearranjo mínimo de 
+fluxos e seus estados entre fragmentos.
 
 
 \phantomsection
 \section*{Projeto}
 \addcontentsline{toc}{section}{Projeto}
 
+A ferramenta propõe uma solução para o problema de pacotes através do cálculo 
+de função \textit{hash} sobre seu cabeçalho, cujo resultado determina em qual 
+fragmento o fluxo é alocado. A carga é balanceada por um algoritmo de 
+otimização, por uma tabela compartilhada entre os núcleos que relaciona fluxos 
+e fragmentos. \texttt{RSS++} permite a alocação dinâmica de núcleos e previne a 
+reordenação de pacotes durante a migração de fragmentos entre núcleos.
 
+A solução é aplicável quando há entropia entre os campos do cabeçalho e fluxos 
+demandam aproximadamente a mesma carga de recursos computacionais.
 
 
 \phantomsection
 \section*{Implementação e Avaliação}
 \addcontentsline{toc}{section}{Implementação e Avaliação}
 
+Apresentou-se duas implementações: em \texttt{DPDK} e no kernel do Linux, 
+através de programa \texttt{BPF} inserido no \texttt{XDP}. Para avaliar a 
+ferramenta, um estudo de caso foi realizado sobre base de tráfego coletado em 
+um campus. O objetivo foi responder às seguintes perguntas de pesquisa:
 
+A avaliação constatou distribuição justa o suficiente da carga, com redução na 
+latência em uma ordem de grandeza. Falta do estado de fluxo pode demandar 
+reordenação de pacotes, bem como o uso de tabelas por fragmentos resultou em 
+maior taxa de vazão e menor latência. A ferramenta melhora o uso de recursos 
+computacionais e apresenta melhor desempenho.
 
 
 \phantomsection
 \section*{Conclusão}
 \addcontentsline{toc}{section}{Conclusão}
 
-
+O trabalho lista limitações e retrições em cenários ainda não explorados, mas 
+que consistem em trabalhos futuros, como: o processamento e análise de 
+desempenho sobre séries de pacotes pequenos e séries de pacotes grandes, 
+inter-conexão de memórias entre núcleos do dispositivo de rede, suporte a 
+múltiplas aplicações, implementação em clientes. Este trabalho permite a 
+distribuição de carga escalável em mútiplos núcleos em um servidor.

@@ -6,8 +6,8 @@ all: clean compile
 
 compile:
 	@"$(LATEXMK)" -pdf -synctex=1 \
-		-xelatex -interaction=nonstopmode \
-		-quiet \
+		-xelatex \
+		-interaction=nonstopmode -quiet \
 		"$(SOURCE).tex"
 
 clean:
