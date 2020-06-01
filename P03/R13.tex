@@ -7,32 +7,86 @@
 \section*{Introdução}
 \addcontentsline{toc}{section}{Introdução}
 
-
+O crescimento das redes de computadores resultaram en congestionamento de 
+tráfego. Foram propostos algoritmos em contraponto à conservação de pacotes, 
+que se mostrou não robusta, na medida em que se observa que a conexão pode não 
+atingir um ponto de equilíbrio, um remetente pode inserir um novo pacote na 
+rede antes que um antigo saia --- de forma a extrapolar a janela de transmissão 
+---, ou o equilíbrio não é possível de ser atingido em função de limitações no
+caminho.
 
 
 \phantomsection
 \section*{Equilíbrio com \textit{Slow-Start}}
 \addcontentsline{toc}{section}{Equilíbrio com \textit{Slow-Start}}
 
+No contexto de fluxos conservativos, nos quais a densidade de pacotes entre 
+remetente e destinatário é constante, falhas ocorrem de conexões que começam ou 
+recomeçar após uma perda de pacote. Após o envio de uma janela de pacotes, o 
+remetente está sujeito ao tempo de envio no link mais lento e ao recebimento de 
+pacotes de confirmação. Como o destinatário só pode enviar um pacote de 
+confirmação após receber um pacote do remetente, este protocolo de transporte é 
+dito auto-sincronizado. Para determinar o fluxo de dados é necessário 
+determinar a sincronização, e vice-versa.
 
+O algoritmo \textit{slow-start} consiste em determinar o tamanho da janela de 
+trasmissão --- inicialmente de 1 pacote --- e incrementar o tamanho na medida 
+em que pacotes de confirmação são recebidos: se a rede comporta o pacote de 
+confirmação, a janela pode ser incrementada. O tamanho da janela utilizado é o 
+valor mínimo entre a janela determinada pelo \textit{slow-start} e o anunciado 
+pelo destinatário. A progressão da janela é exponencial e seu efeito na 
+performance é negligenciável.
 
 
 \phantomsection
 \section*{Conservação no Equilíbrio}
 \addcontentsline{toc}{section}{Conservação no Equilíbrio}
 
+Após implementar o fluxo de dados, se assumirmos que o protocolo foi 
+implementado corretamente, se faz necessário estimar o RTT médio e sua 
+variância. O trabalho propõe método para estimar a variância com base em uma 
+relação com entre sinal e ruído. A média é calculada a partir de relação 
+especificada pelo padrão TCP, ambas as estimativas amparadas pela teoria de 
+controle.
 
+Em caso de falhas, o espaçamento para retransmissão é exponencial. Isso ocorre 
+pelo fato de que redes se comportam como sistemas lineares: atingem 
+estabilidade em tempo exponencial, se estáveis; podem se tornar estáveis se 
+aplicarmos atenuação exponencial de seus estímulos de entrada --- espaçamento 
+exponencial ---, se instáveis.
 
 
 \phantomsection
 \section*{Controle de Congestionamento}
 \addcontentsline{toc}{section}{Controle de Congestionamento}
 
+Uma vez estabelecidos o fluxo de transmissão e o equilíbrio em função da 
+variação no tempo de envio, se faz necessário estabelecer uma estratégia de 
+controle de congestionamento.
+Como a perda de pacotes por dano é relativamente rara --- para conexões 
+cabeadas, à época do artigo ---, a perda de pacotes é utilizada como sinal de 
+que a rede se encontra congestionada.
 
+O remetente deve expandir a janela de transmissão caso não receba sinal de que 
+a rede está congestionada. Processo que se dá como no \textit{slow-start} e 
+usualmente é implementado de forma conjunta, mas são dois processos distintos. 
+A expansão se dá através da soma de pacote de confirmação --- incremento de uma 
+unidade.
+
+O remetente deve retrair a janela de trasmissão caso receba sinal de que a rede 
+está congestionada. Processo que se dá pela multiplicação de um fator $k$, 
+$0 \le k \le 1$ --- 0,5 praticado. Os remetentes precisam aliviar a demanda de 
+recursos da rede para descaracterizar a rede como descongestionada.
 
 
 \phantomsection
 \section*{Trabalhos Futuros}
 \addcontentsline{toc}{section}{Trabalhos Futuros}
 
-
+Os algoritmos apresentados garatem que a capacidade do link não será excedida, 
+mas não garante compartilhamento justo. Somente nos pontos aonde ocorrem 
+convergência de fluxo é possível prover solução para este problema. A deteção 
+de congestionamentos em estágio prematuro se faz importante, dado seu 
+agravamento exponencial, passível de solução através do ajuste da janela de 
+transmissão. Este problema se mostra não-trivial, dado a natureza explosiva do 
+tráfego de dados; no entanto.
