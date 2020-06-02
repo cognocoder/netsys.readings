@@ -4,5 +4,48 @@
 
 
 \phantomsection
-\section*{Introdução}
-\addcontentsline{toc}{section}{Introdução}
+\section*{Slow-Start}
+\addcontentsline{toc}{section}{Slow-Start}
+
+Embora a implementação do fluxo de transmissão segundo anúncio do destinatário 
+funcione em situações restritas, sua aplicabilidade a redes nas quais fluxo é 
+variante e há elementos com links lentos resultam em congestionamentos.
+
+O algoritmo \textit{slow-start} apresenta solução para este problema. A janela 
+de transmissão é inicialmente de 1 segmento. Sempre que um segmento de 
+confirmação é recebido ele é incorporado à janela, que é expandida 
+exponencialmente. A perda de pacotes sinaliza que a janela está larga.
+
+
+\phantomsection
+\section*{Prevenção de Congestionamento}
+\addcontentsline{toc}{section}{Prevenção de Congestionamento}
+
+Congestionamentos ocorrem quando há maior fluxo de entrada do que de saída. A 
+prevenção de congestionamento lida com a perda de pacotes.
+
+O tamanho da janela de transmissão é o mínimo entre o anunciado pelo 
+destinatário e o determinado pelo \textit{slow-start}. Em caso de 
+congestionamento, a janela é reduzida pela metade; a 1 segmento, em caso de 
+\textit{timeout}. Este novo valor é salvo em uma variável de limiar, com tamanho 
+mínimo de 2 segmentos.
+
+Se a janela for menor ou igual ao limiar, a janela é expandida com 
+\textit{slow-start}. Caso contrário, seu crescimento é linear.
+
+
+\phantomsection
+\section*{Retransimssão Rápida}
+\addcontentsline{toc}{section}{Retransimssão Rápida}
+
+Duplicadas do pacote de confirmação podem ocorrer caso os pacotes sejam 
+recebidos fora de ordem. Na detecção de três ou mais duplicadas, é entendido a
+perda de um pacote e o TCP realiza sua retransmissão.
+
+
+\phantomsection
+\section*{Recuperação Rápida}
+\addcontentsline{toc}{section}{Recuperação Rápida}
+
+No caso de retransmissão rápida, a prevenção de congestionamento é executada. 
+Isto é a recuperação rápida.

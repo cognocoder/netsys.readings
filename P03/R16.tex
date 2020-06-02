@@ -6,3 +6,37 @@
 \phantomsection
 \section*{Introdução}
 \addcontentsline{toc}{section}{Introdução}
+
+O trabalho propõe caracterização analítica do TCP em função da taxa de perda e 
+do RTT para transferência em massa. Avaliou-se o impacto de \textit{timeouts}, 
+que ocorrem com maior frequência do que a retransmissão rápida, bem como do 
+tamanho da janela do receptor.
+
+Um modelo analítico do TCP oferece possibilidade da divisão justa de banda e a 
+interação entre fluxo de outros protocolos e a conexão TCP.
+
+
+\phantomsection
+\section*{Modelo, Experimentos e Análise}
+\addcontentsline{toc}{section}{Modelo, Experimentos e Análise}
+
+O trabalho apresenta um modelo estocástico para a prevenção de congestionamento 
+TCP com uma expressão relativamente simples. Considera como indicador de perda 
+de pacotes o recebimento de três ou mais duplicatas de pacotes de confirmação 
+ou \textit{timeout}. O modelo também incorpora o tamanho de janela do receptor.
+
+A avaliação se deu através da experimentação e análise com bases de dados, nas 
+quais constatou-se a validade do modelo, bem como a predominância de 
+\textit{timeouts} em relação às duplicatas de pacotes de confirmação.
+
+
+\phantomsection
+\section*{Discussão e Conclusão}
+\addcontentsline{toc}{section}{Discussão e Conclusão}
+
+O modelo é compatível com comportamento observado na maior parte dos casos. Em 
+especial, destaca-se o impacto dos \textit{timeouts} na taxa de transmissã. A 
+expressão permite a interação entre fluxo de outros protocolos e a conexão TCP.
+
+Os autoreas apresentam possibilidades de trabalhos futuros e discutem limites e 
+premissas: o trabalho não captura sutilezas da recuperação rápida, por exemplo.
